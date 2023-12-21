@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: none;
+            background-color: white;
+            -webkit-appearance: none; /* Removes default chrome and safari style */
+            -moz-appearance: none; /* Removes default style Firefox */
+            appearance: none; /* Removes default browser style*/
+            position: relative;
+        }
+
+        .form-group:after {
+            content: '▼';
+            font-size: 12px;
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            pointer-events: none;
+            color: #333;
+        }
+
+
+        .method-selection {
+            max-width: 500px;
+            margin: auto;
+        }
+</style>
+</head>
+<body>
+
+<!-- Додавання спадного меню для вибору методу аналізу -->
+<div class="method-selection">
+    <div class="form-group">
+        <label for="methodSelection">Оберіть метод аналізу:</label>
+        <select id="methodSelection" name="method" onchange="updateAnalysisResults()">
+            <option value="weighted">Weighted Goal Programming</option>
+            <option value="preemptive">Preemptive Goal Programming</option>
+        </select>
+    </div>
+</div>
+
+<div th:if="${analysisResults}" class="container mt-4">
+
+    <!-- Форма для редагування вагових коєфіцієнтів -->
+    <form method="post">
+        <p id="weightsInfo">
+        </p>
+    </form>
+
+    <h2>Кандидати:</h2>
+    <table class="styled-table">
+        <thead>
+        <tr class="active-row">
+            <th>ID</th>
+            <th>Ім'я</th>
+            <th>Технічна освіта</th>
+            <th>Досвід роботи</th>
+            <th>Навички</th>
+            <th>Сертифікати</th>
+            <th>Рівень співпрацювання</th>
+            <th>Рівень комунікації</th>
+            <th>Рівень англійської мови</th>
+            <th>Культурна відповідність</th>
+            <th>Бажана зарплатня</th>
+            <th>Відстань/Відхилення</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="active-row" th:each="candidate : ${analysisResults.normalizedCandidates}">
+            <td th:text="${candidate.id}"></td>
+            <td th:text="${candidate.name}"></td>
+            <td th:text="${candidate.level_of_technical_education}"></td>
+            <td th:text="${candidate.work_experience}"></td>
+            <td th:text="${candidate.number_of_skills}"></td>
+            <td th:text="${candidate.number_of_certificates}"></td>
+            <td th:text="${candidate.cooperation}"></td>
+            <td th:text="${candidate.communication}"></td>
+            <td th:text="${candidate.english_level}"></td>
+            <td th:text="${candidate.cultural_relevance}"></td>
+            <td th:text="${candidate.desired_salary}"></td>
+            <td th:id="'distance-' + ${candidate.id}"></td> <!--  Не виводяться дані окремо про відстань/відхилення, протестувати-->
+        </tr>
+        </tbody>
+    </table>
+
+
+    <div class="row">
+
+        <div class="col-md-6" th:if="${analysisResults.idealVacancy}">
+            <h2>Вимоги до кандидата(вакансія):</h2>
+            <p>ID: <span th:text="${analysisResults.idealVacancy.vacancy_id}"></span></p>
+            <p>Назва вакансії: <span th:text="${analysisResults.idealVacancy.vacancy_title}"></span></p>
+            <p>Технічна освіта: <span th:text="${analysisResults.idealVacancy.getRequired_education_level()}"></span></p>
+            <p>Досвід роботи: <span th:text="${analysisResults.idealVacancy.getRequired_experience()}"></span></p>
+            <p>Навички: <span th:text="${analysisResults.idealVacancy.getRequired_skills()}"></span></p>
+            <p>Сертифікати: <span th:text="${analysisResults.idealVacancy.getRequired_certificates()}"></span></p>
+            <p>Рівень співпрацювання: <span th:text="${analysisResults.idealVacancy.getRequired_cooperation()}"></span></p>
+            <p>Рівень комунікації: <span th:text="${analysisResults.idealVacancy.getRequired_communication()}"></span></p>
+            <p>Рівень англійської мови: <span th:text="${analysisResults.idealVacancy.getRequired_english_level()}"></span></p>
+            <p>Культурна відповідність: <span th:text="${analysisResults.idealVacancy.getCultural_fit_importance()}"></span></p>
+            <p>Максимальна заробітня плата: <span th:text="${analysisResults.idealVacancy.getSalary_range()}"></span></p>
+
+            <p th:unless="${analysisResults.idealVacancy}">Дані до вимог відсутні.</p>
+        </div>
+
+        <div class="col-md-6" th:if="${!analysisResults.topCandidates.isEmpty()}" id="topCandidatesContainer">
+            <h2>Топ-3 кандидати:</h2>
+            <ul>
+                <li th:each="candidate : ${analysisResults.topCandidates}">
+                    <p th:text="${candidate.id} +
+                        ': ' + ${candidate.name} +
+                        ', ' + ${candidate.desired_salary}+
+                        ', ' + ${analysisResults.distances[candidate.id]} ">
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div th:unless="${!analysisResults.topCandidates.isEmpty()}">
+            <p>Кандидати не знайдені.</p>
+        </div>
+    </div>
+</div>
+<script src="/js/script.js">
+</script>
+</body>
+</html>

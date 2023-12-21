@@ -1,0 +1,135 @@
+/* Основні стилі для контейнера та сторінки */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #fafafa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 95%;
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow-x: auto; /* Для прокрутки таблиці в середині */
+}
+
+/* Стилі для заголовків */
+h2, h3, h4 {
+    margin-top: 0;
+}
+
+/* Стилі для таблиць */
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 600px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.styled-table thead {
+    background-color: #f0f0f0;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+/* Стилі для списків */
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    padding-bottom: 4px;
+}
+
+/* Стилі для кнопок */
+button {
+    background-color: #007aff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #005ecb;
+}
+
+/* Стилі для додаткових блоків */
+.best-candidate {
+    padding: 15px;
+    background-color: #007aff;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Медіа запити для респонсівності */
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+
+    .styled-table {
+        font-size: 0.8em;
+    }
+}
+
+/* Застосування автоматичної прокрутки для таблиці */
+.styled-table {
+    overflow-x: auto;
+    display: block;
+}
+
+/* Перевизначення стилів Bootstrap, якщо вони використовуються */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #d32222;
+}
+
+.table thead th {
+    border: none;
+}
+
+.table tbody td {
+    border: none;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Стилі для підвалу, якщо він є */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background: #ad2929;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

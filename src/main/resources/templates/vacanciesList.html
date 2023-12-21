@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список вакансій</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div class="container mt-4">
+  <h2>Список вакансій</h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Назва</th>
+      <th>Рівень освіти</th>
+      <!-- Додайте інші поля тут, якщо потрібно -->
+      <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vacancy : ${vacancies}">
+      <td th:text="${vacancy.vacancy_id}">1</td>
+      <td th:text="${vacancy.vacancy_title}">Розробник</td>
+      <td th:text="${vacancy.required_education_level}">Освіта</td>
+      <!-- Виведіть інші поля тут, якщо потрібно -->
+      <td>
+<!--        <a th:href="@{'/vacancies/edit/' + ${vacancy.vacancy_id}}" class="btn btn-primary">Редагувати</a>-->
+        <a th:href="@{/vacancies/delete/{id}(id=${vacancy.vacancy_id})}" class="btn btn-danger">Видалити</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.7.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Додавання вакансії</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box; /* Makes sure padding does not affect total width */
+        }
+
+        button, input[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover, input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Додавання нової вакансії</h1>
+
+<form action="/vacancies/add" method="post">
+
+    <label for="vacancy_title">Назва вакансії:</label>
+    <select id="vacancy_title" name="vacancy_title">
+        <option value="Junior Developer">Junior Developer</option>
+        <option value="Middle Developer">Middle Developer</option>
+        <option value="Senior Developer">Senior Developer</option>
+    </select><br>
+    <h4>Необхідні вимоги</h4>
+    <label for="required_education_level">Рівень освіти:</label>
+    <input type="text" id="required_education_level" name="required_education_level"><br>
+
+    <label for="required_experience">Рівень досвіду:</label>
+    <input type="text" id="required_experience" name="required_experience"><br>
+
+    <label for="required_skills">Кількість навичок:</label>
+    <input type="text" id="required_skills" name="required_skills"><br>
+
+    <label for="required_certificates">Кількість сертифікатів:</label>
+    <input type="text" id="required_certificates" name="required_certificates"><br>
+
+    <label for="required_cooperation">Рівень співпраці:</label>
+    <input type="text" id="required_cooperation" name="required_cooperation"><br>
+
+    <label for="required_communication">Рівень комунікації:</label>
+    <input type="text" id="required_communication" name="required_communication"><br>
+
+    <label for="required_english_level">Рівень англійської мови:</label>
+    <input type="text" id="required_english_level" name="required_english_level"><br>
+
+    <label for="cultural_fit_importance">Рівень культурної відповідності:</label>
+    <input type="text" id="cultural_fit_importance" name="cultural_fit_importance"><br>
+
+    <label for="salary_range">Максимальна зарплатні:</label>
+    <input type="text" id="salary_range" name="salary_range"><br>
+
+    <input type="submit" value="Додати вакансію">
+</form>
+</body>
+</html>
